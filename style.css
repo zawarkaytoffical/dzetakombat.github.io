@@ -1,0 +1,54 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #ff5722;
+}
+
+label {
+    font-size: 1.2rem;
+    color: white;
+}
+
+input {
+    padding: 10px;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+button {
+    background: #ff5722;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background: #e64a19;
+}
+
+#tapButton {
+    font-size: 2rem;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #4caf50;
+}
