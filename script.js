@@ -4,17 +4,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const nicknameInput = document.getElementById('nickname');
     const setNicknameButton = document.getElementById('setNickname');
     const tapButton = document.getElementById('tapButton');
+    const resetButton = document.getElementById('resetButton');
     const clickCountElement = document.getElementById('clickCount');
     const welcomeMessage = document.getElementById('welcomeMessage');
 
+    // Проверяем, есть ли ник и клики в localStorage
     let nickname = localStorage.getItem('nickname');
-    let clickCount = 0;
+    let clickCount = parseInt(localStorage.getItem('clicks'), 10) || 0;
 
-    // Проверяем, есть ли ник в localStorage
     if (nickname) {
         nicknameContainer.style.display = 'none';
         gameContainer.style.display = 'block';
         welcomeMessage.textContent = `Добро пожаловать, ${nickname}!`;
+        clickCountElement.textContent = clickCount;
     }
 
     // Устанавливаем никнейм
@@ -23,27 +25,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (enteredNickname) {
             nickname = enteredNickname;
             localStorage.setItem('nickname', nickname);
+            localStorage.setItem('clicks', 0); // Обнуляем клики при создании ника
+            clickCount = 0;
             nicknameContainer.style.display = 'none';
             gameContainer.style.display = 'block';
             welcomeMessage.textContent = `Добро пожаловать, ${nickname}!`;
+            clickCountElement.textContent = clickCount;
         }
     });
-
-    // Отправляем клики на сервер
-    async function sendClicks() {
-        await fetch('/api/clicks', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ nickname, clicks: clickCount }),
-        });
-    }
 
     // Обрабатываем клики
     tapButton.addEventListener('click', () => {
         clickCount++;
+        localStorage.setItem('clicks', clickCount);
         clickCountElement.textContent = clickCount;
-        sendClicks();
+    });
+
+    // Сброс кликов
+    resetButton.addEventListener('click', () => {
+        clickCount = 0;
+        localStorage.setItem('clicks', 0);
+        clickCountElement.textContent = clickCount;
     });
 });
